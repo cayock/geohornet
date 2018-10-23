@@ -1,0 +1,347 @@
+{% extends "geo/base.html" %}
+{% load static %}
+{% block upandbody %} <!-- Debut du bloc upandbody -->
+<script>
+</script>
+
+<!-- **************************************************************************************** -->
+<!--  Début HTML -->
+<!--  on trouve ici une struture 'responsive', en mode multipage, basée sur JqueryMobile1.4
+	en page1 id "one" on a acceuil et carte
+			 on integre dynamiquement un bouton pour chargement page popup formaulaire
+			 on met à jour au besoin les value lat et lon du formulaire
+			 
+	en page 2 id "popup" un formulaire d'envoie d'une nouvelle position
+<!-- **************************************************************************************** -->
+
+  <body> <!-- Start of first page: #one -->
+    <div  class="extracontainer" data-role="page" id="one" data-ajax="false" data-url = '/acceuil' data-theme="a">
+      <!--Notre Header -->
+      
+      <div  data-role="header" class="ui-shadow ui-corner-all">
+        <h1  id="titleText">Domain GeoHornet - Geolocalisation du Frelon Asisatique</h1>
+      </div>
+      <div  data-role="content">
+      <div  id="bann"  #bann="">
+      	<!-- Notre Logo -->
+        <div  id="banner" >
+          	<div  id="fronty"></div>
+          	<div id="button_findme">
+                <button>*°  Trouvez-Moi !</button>
+            </div>
+			<div id="out"></div>
+        </div>
+       
+        <!-- Le bouton déroulant avec + pour explication de fonctionnement -->
+        <div style="text-align: center;" class="mapContainer">
+        <div  class="panBorder">
+        <div  style="text-align:center;padding-left: 1px;padding-right: 1px; margin-left: 2px; margin-right: 2px; z-index: 1;" data-role="collapsible" id="pany">
+	    	<h4>Aide - Info Chasse Frelon Asiatique</h4>
+	        <p>Sur cet outil participatif, cliquez sur la carte pour placer votre marqueur avec si possible, une précision inférieure à 15mètres. Assurez-vous avant d'être convaincu qu'il s'agissait bien d'un
+            Frelon Asiatique, à pates JAUNES.</p>
+            
+	        	
+                <span>Voici comment reconnaitre notre nuisible</span><br>
+                
+                
+                    
+                    
+                    <div style="display:inline-block;position : relative;text-align:center;width:270px;height:200px;"
+
+                    class="ui-shadow ui-corner-all slider">
+                    <ul  class="items" style="display:none;">
+                        <li><img  src="{% static 'images/frelon1.jpg' %}"  alt=""></li>
+                        <li><img  src="{% static 'images/frelon2.jpg' %}"  alt=""></li>
+                        <li><img  src="{% static 'images/frelon3.jpg' %}"  alt=""></li>
+                    </ul>
+                </div>
+                
+                <div style="text-align:center;margin:15px;">
+                    <p><a> Plus petit que le frelon européen</a></p>
+                    <p><a> Extrémités des pâtes JAUNES</a></p>
+                    
+                    
+                </div>
+
+
+	         <p>Liens</p>
+	        
+	        <p>Lorsque la position du marqueur est bonne, accédez à la page de confirmation grâce au bouton de validation en dessous de la carte. Votre information viendra nourrir la base de données d'accès public des positions observées.</p>
+            
+            <p>GeoHornet est un outil pour toutes les personnes engagées dans la lutte pour protéger nos abeilles.</p>
+	    </div>
+        </div>
+       </div>
+            
+      	<!-- Notre map ici, 3 containers pour application radius sur le bord de la carte -->
+      	<div style="text-align: center;" class="mapContainer">
+          	<div class="mapBorder">
+                
+          		<div id="map_canvas"></div> 
+          	<!-- ici le map canvas appelé dans les scripts js 
+          		Notamment le bouton valider qui est créé dynamiquement en js dans la
+          		fonction initialize, pour s'intégrer à la carte.
+          	-->
+        	</div>
+        </div>
+      </div>
+      <!-- info latitude longitude en bas de carte-->  
+      
+           <div>
+          
+       <form id = "myFor" method="POST" class="post-form" action='/post_first' data-rel="back">	
+       	{% csrf_token %}
+        <div style="text-align: center;padding-right: 10%;padding-left: 10%; margin-left: 15%; margin-right: 15%;">
+        	<button type="submit" name="submit" data-theme="a"  >Valider la position
+        	</button>
+        </div>
+        
+        
+        
+        <fieldset   class="ui-grid-a">
+          <div  class="ui-block-a"><p>latitude</p>
+           <div style="text-align: center;padding-right: 10%;padding-left: 10%; margin-left: 5%; margin-right: 5%;">
+          	<input style="text-align: center;" id="lat" name="lat" value= {{form.lat}}
+           </div>
+          </div>
+          <div  class="ui-block-b" ><p>longitude</p>
+           <div style="text-align: center;padding-right: 10%;padding-left: 10%; margin-left: 5%; margin-right: 5%;">
+           	<input  style="text-align: center;" id="long" name="lng" val= {{form.lng}}
+			<input type="hidden" name='view_dtime' val={{form.view_dtime}}
+			<input type="hidden" name='email' val={{form.email}}
+			
+			 </div>
+       	  </div>
+	  </fieldset>
+	  </form>
+      </div>
+  	  <!-- footer -->
+      <div   data-role="footer"  data-theme="a">
+        <h4>Dev. en cours /  2016 Douirin.Eric@gmail.com </h4>
+      </div>
+      </div>
+      <!-- /footer -->
+      
+     </div>
+     
+    
+<!-- **************************************************************************************** -->
+    
+<!-- **************************************************************************************** -->
+<!-- Fin block HTML, Début Script JS -->
+<!-- **************************************************************************************** -->
+<script>
+
+// Fonctions de mise à jour des données lat,long pour le formulaire d'envoi
+
+// Fonction initialize, Global, appelé par Googlemapcallback
+
+
+</script>
+ </body>
+<script>
+function initialize() {
+    
+        console.log("initmap");
+        initializemap();
+        
+        
+        
+        console.log('on ajoute pany event');
+        $(document).on('pageinit', '#one', function(){
+                       $(document).on("collapsiblecollapse", "#pany", function( event, ui ){
+                                      console.log('Close');
+                                      });
+                       
+                       $(document).on("collapsibleexpand", "#pany", function( event, ui ){
+                                      console.log('collapsible expand Open');
+                                      $('.slider')._TMS({
+                                                        duration: 1000,
+                                                        easing: 'easeOutQuart',
+                                                        preset: 'zoomer',
+                                                        slideshow: 4000,
+                                                        banners: false,
+                                                        pauseOnHover: true,
+                                                        waitBannerAnimation: false,
+                                                        });
+
+                                      });
+        });
+               
+};
+
+
+  // Fonction initialize Map
+function initializemap() {
+        var myLatlng = new google.maps.LatLng(47.95325632544651, -4.36331033706665);
+        var x = document.getElementById("lat");
+        x.value="47.95325632544651";
+        var y = document.getElementById("long");
+        y.value="-4.36331033706665";
+
+        
+        var defLatlng = myLatlng;
+        var markers = [];
+        var mapOptions1 = {
+            zoom: 12,
+            center: myLatlng,
+            mapTypeId: google.maps.MapTypeId.HYBRID
+        };
+        var mapOptions2 = {
+            zoom: 15,
+            center: myLatlng,
+            mapTypeId: google.maps.MapTypeId.HYBRID
+        };
+        
+        // Création de la map        
+        var map = new google.maps.Map(document.getElementById("map_canvas"),mapOptions1);
+		// Création du marker
+        var marker = new google.maps.Marker({
+          	draggable: true,                              
+          	position: myLatlng,
+          	map: map,
+          	title: "Nid ou Frelon Asiatique ici !"
+        });                   
+       
+        // Création du cercle autour du marker
+        var hornetCircle = new google.maps.Circle({
+    	  	strokeColor: '#FF0000',
+      		strokeOpacity: 0.8,
+      		strokeWeight: 2,
+      		fillColor: '#FFFFCC',
+      		fillOpacity: 0.35,
+      		map: map,
+      		center: marker.position,
+      		radius:  400
+    	});
+        
+  	// ici on lie notre object cercle avec le marker
+        hornetCircle.bindTo('center', marker, 'position');
+        function refreshLatlng(Latlng){
+			var x= document.getElementsByName("lat"); 
+    		var y= document.getElementsByName("lng");
+			var i;
+			for (i = 0; i < x.length; i++) { // *** On boucle sur ts les elements lat , lng de la page
+    			
+                x[i].value = Latlng.lat();//     dont name=lat ou lng, et edite les value.
+    			y[i].value = Latlng.lng();
+			}		 
+		}
+	
+    // Fonctions de geolocalisation du terminal, si err, garde le premier point donné (plogastel st germain)
+		var geooptions = {
+            enableHighAccuracy: true,
+            timeout: 5000,
+            maximumAge: 15000
+        };
+        function success(pos) {
+            
+             var newLatlng =new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude); // ici on crée un objet Latlng google map
+
+			 //console.log('Your current position is:');
+			 //console.log('Latitude: ' + crd.latitude);
+			 //console.log('Longitude: ' + crd.longitude);
+			 //console.log('More or less ' + crd.accuracy + ' meters.');
+			 marker.setPosition(newLatlng); // on modifie l'objet marker.position
+             map.mapOptions=mapOptions1;
+             refreshLatlng(marker.position); // on envoi l'objet marker.position
+             map.setCenter(marker.position); // on centre la carte
+             map.setZoom(15)
+             $.mobile.loading( "show", {
+                              text: "Trouvé !",
+                              textVisible: true,
+                              textonly: false
+                              });
+
+
+             setTimeout(function() {$.mobile.loading("hide");}, 1200); //  // on retirera le loader...dans x millisecondes ;)
+
+		};
+		function error(err) {
+
+             console.log('ERROR(' + err.code + '): ' + err.message);
+             
+             $.mobile.loading( "show", {
+                              text: "bien caché ! pas trouvé :(",
+                              textVisible: true,
+                              textonly: false
+                              });
+            setTimeout(function() {$.mobile.loading("hide");}, 1800); //  // on retirera le loader...dans x millisecondes ;)
+
+            map.setZoom(7)
+             marker.setPosition(defLatlng);
+			 refreshLatlng(defLatlng);
+             map.setCenter(marker.position);
+                     };
+        
+        
+  	
+    // Fonction Click :	Map
+        google.maps.event.
+        addListener(map, 'click', function(event) {
+                    marker.setPosition(event.latLng); // *** Mise à jour position du marker
+                    refreshLatlng(marker.position); // *** Mise à jour des champs lat lng
+                    });
+    // Fonction Click : Cercle                                                              
+    	google.maps.event.
+        addListener(hornetCircle, 'click', function(event) {
+                    marker.setPosition(event.latLng); // *** Mise à jour position du marker
+                    refreshLatlng(marker.position); // *** Mise à jour des champs lat lng
+                    });
+  	// Fonction End of Drag : Marker 
+    	google.maps.event.
+        addListener(marker, 'dragend', function(event) {
+                    refreshLatlng(marker.position); // *** Mise à jour des champs lat lng
+                    });
+    // Fonction Click :	Bouton Trouvez-Moi
+        document.getElementById("button_findme").
+        addEventListener('click', function(event) {
+                         //console.log('Clické');
+                         $.mobile.loading( "show", {
+                                          text: "Géolocalisation en cours ...",
+                                          textVisible: true,
+                                          textonly: false
+                                          });
+                         //console.log('loader affiché');
+                         navigator.geolocation.getCurrentPosition(success, error,geooptions); // on lance la geoloc une fois, si success, place le marker
+                         setTimeout(function() {$.mobile.loading("hide");}, 5000);
+                         });
+                
+
+
+
+    } // End Fonction initialize, lancée juste en dessous, après avoir lancé le download de la carte
+    
+    </script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCV3LDTWBm0-3YqUSCcEUXRyzXU3BIUsfs&callback=initialize">
+        
+        
+	</script>
+
+     {% endblock upandbody %}
+<!--
+	 // on fabrique le bouton trouvez-moi en bas au centre de map
+		 function ButtControl(buttControlDiv, map) {
+		  // Set CSS for the control border.
+		  	var controlUI = document.createElement('div');
+		  	controlUI.style.cursor = 'pointer';
+		  	controlUI.style.textAlign = 'center';
+		  	controlUI.title = 'Geolocaliser ma position';
+		  	buttControlDiv.appendChild(controlUI);
+		  // Set CSS for the control interior.
+		  	var controlText = document.createElement('div');
+		  	controlText.style.color = 'rgb(25,25,25)';
+		  	controlText.style.fontSize = '16px';
+		  	controlText.style.lineHeight = '28px';
+		  	controlText.style.paddingLeft = '5px';
+		  	controlText.style.paddingRight = '5px';
+		  	controlText.innerHTML =  controlText.innerHTML = '<p><a  href="#popup" class="ui-btn ui-shadow ui-corner-all" data-rel="dialog" data-inline="false" data-transition="pop">Trouver ma position</a></p>';
+		  	controlUI.appendChild(controlText);
+		}
+        var buttControlDiv = document.createElement('div'); // on cree le div
+  		var buttControl = new ButtControl(buttControlDiv, map); // on cree le button dans le div
+  		
+  		buttControlDiv.index = 1;
+  	// Création du bouton Valider	
+  		map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(buttControlDiv); // on integre le div à la map
+-->

@@ -1,0 +1,63 @@
+{% extends "geo/base.html" %}
+{% load static %}
+{% block upandbody %} <!-- Debut du bloc upandbody -->
+
+<!-- **************************************************************************************** -->
+<!--  Début HTML -->
+<!--  on trouve ici une struture 'responsive', en mode multipage, basée sur JqueryMobile1.4
+	en page1 id "one" on a acceuil et carte
+			 on integre dynamiquement un bouton pour chargement page popup formaulaire
+			 on met à jour au besoin les value lat et lon du formulaire
+			 
+	en page 2 id "popup" un formulaire d'envoie d'une nouvelle position
+			
+
+
+<!-- **************************************************************************************** -->
+
+  <body> <!-- Start of first page: #one -->
+    
+   
+    
+    
+<!-- **************************************************************************************** -->
+<!--  Début Page formulaire validation -->
+<!-- **************************************************************************************** --> 
+    <!-- Page popup Merci d'avoir envoiyé nouvelle position: #popup -->
+    <div 
+    
+      <div class="extracontainer" data-dialog="true"  data-transition="flip" data-role="page" style="text-align: center;"  id="thanks" data-url = '/ok' >
+       
+      <div  data-role="header"  data-theme="e">
+        <div class="page-header">
+            <h1>Test DEV ARRIVAL</h1>
+    		
+        </div>
+      </div>
+      <!-- /header -->
+      <div  data-role="content"  data-theme="d">
+      	<img  id="link"  style="margin-left : 0px; float : left;padding-right : 1em;" src="{% static 'images/frelon-logo-petit20k110_127.png' %}">
+        <h2>detail du contenu de variableform</h2>
+        
+   		
+        		{{ form.as_p }}
+        
+   		
+    
+    	
+      </div>
+      <!-- /content -->
+      <div  style=""  data-role="footer"  data-position="fixed"  data-theme="a">
+        <h4>Si vous lisez ce message, vous êtes la résistance</h4>
+      </div>
+      <!-- /footer --> 
+    </div>
+    </div><!-- /page thanks -->
+<!-- **************************************************************************************** -->
+<!-- Fin page formulaire popup -->
+<!-- **************************************************************************************** -->
+ 
+ </body>
+     {% endblock upandbody %}
+
+

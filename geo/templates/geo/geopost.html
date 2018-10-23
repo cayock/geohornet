@@ -1,0 +1,136 @@
+{% extends "geo/base.html" %}
+{% load static %}
+{% block upandbody %} <!-- Debut du bloc upandbody -->
+
+<!-- **************************************************************************************** -->
+<!--  Début HTML -->
+<!--  on trouve ici une struture 'responsive', en mode multipage, basée sur JqueryMobile1.4
+	en page1 id "one" on a acceuil et carte
+			 on integre dynamiquement un bouton pour chargement page popup formaulaire
+			 on met à jour au besoin les value lat et lon du formulaire
+			 
+	en page 2 id "popup" un formulaire d'envoie d'une nouvelle position
+			
+
+
+<!-- **************************************************************************************** -->
+
+  <body> <!-- Start of first page: #one -->
+    
+   
+    
+    
+<!-- **************************************************************************************** -->
+<!--  Début Page formulaire validation -->
+<!-- **************************************************************************************** --> 
+    <!-- Page popup Formulaire d'envoi nouvelle position: #popup -->
+    <div 
+    
+    <div class="extracontainer" data-dialog="true" data-role="page" data-close-btn="none" style="text-align: center;position:relative;top:0px;"  id="popup" data-url = '/acceuil'>
+        
+        <div  data-role="header"  data-theme="e">
+            <div class="page-header" style="margin:15px;text-align:center;">
+                <h2>{{msgligne1}}</h2>
+                <h2>{{msgligne2}}</h2>
+            </div>
+        </div>
+
+      <!-- /header -->
+      <div  data-role="content"  data-theme="d"> 
+        <form  id="myForm" method="POST" class="post-form" action='/post_startnew' >
+    			{% csrf_token %}
+  		<div style="z-index:0;text-align:center; position : relative; margin-bottom: -2em; ">
+         <img  id="link"   src="{% static 'images/frelon-logo-petit20k110_127.png' %}">
+        </div>
+   		<div style="text-align:left;z-index:99;">
+   			
+   			<a>Type d'observation :</a>
+   		<fieldset  data-role="controlgroup" data-type="horizontal" style="text-align: center" data-theme="c">
+        	<input type="radio" name="radio-choice-h-2" id="radio-choice-h-2a" value="frelon" checked="checked">
+        	<label for="radio-choice-h-2a">Un frelon</label>
+        	<input type="radio" name="radio-choice-h-2" id="radio-choice-h-2b" value="nid">
+        	<label for="radio-choice-h-2b">Un nid</label>
+    	</fieldset>
+   		</div>
+    
+    	<fieldset   class="ui-grid-a">
+          <div  class="ui-block-a">
+          <div style="text-align: center;padding-right: 10%;padding-left: 10%; margin-left: 5%; margin-right: 5%;">
+          	<a>latitude</a>
+          	<input {{form.lat}} 
+          	
+    		<div class="errorcontainer"> <p>{{form.lat.errors}}</p></div>	    
+			
+          </div>
+          </div>
+          
+          <div  class="ui-block-b" >
+          <div style="text-align: center;padding-right: 10%;padding-left: 10%; margin-left: 5%; margin-right: 5%;">
+          	<a>longitude</a>
+            <input {{form.lng}}
+            <div class="errorcontainer"> <p>{{form.lng.errors}}</p></div>
+             
+          </div>
+          </div>
+   
+        <div style="text-align: center;padding-right: 10%;padding-left: 10%; margin-left: 5%; margin-right: 5%;margin-top: 15%;">
+          <a>Date de l'observation : </a>
+          <input style="text-align: center" {{form.view_dtime}}
+          	<div class="errorcontainer"> <p>{{form.view_dtime.errors}}</p></div>
+          <br>
+          <a>Email ? info./remerciements </a>
+          <input  {{form.email}}
+          	<div class="errorcontainer"> <p>{{form.email.errors}}</p></div>
+
+        </div>
+        <br>
+        </fieldset>
+        <fieldset  class="ui-grid-a" style="">
+          <div  class="ui-block-a"> 
+          		
+                
+                <a  href="accueil/" data-ajax="false"  rel="external" data-role="button"  data-icon="back">
+                    Retour carte
+                </a>
+               
+
+
+
+          </div>
+          <div  class="ui-block-b" style="text-align: center">
+          		<button type="submit" name="submit" value="Submit Button" data-theme="a" class="ui-btn ui-shadow ui-corner-all">
+          			Valider l'envoi
+          		</button>
+          </div>
+        </fieldset>
+        
+        </form>
+      </div>
+      <!-- /content -->
+      <div  style=""  data-role="footer"  data-position="fixed"  data-theme="a">
+        <h4>Si vous lisez ce message, vous êtes la résistance</h4>
+      </div>
+      <!-- /footer --> 
+    </div>
+    
+    </div><!-- /page popup -->
+<!-- **************************************************************************************** -->
+<!-- Fin page formulaire popup -->
+<!-- **************************************************************************************** -->
+ 
+ </body>
+ <script>
+   
+ $( document ).ready(function() {
+    $(function () {
+    $( '.ui-btn''.ui-header').filter (function () {
+        return $.trim($(this).find('span.ui-btn-text').text()) == 'Close'; 
+    }).hide();
+});
+});  
+    
+
+</script>
+     {% endblock upandbody %}
+
+

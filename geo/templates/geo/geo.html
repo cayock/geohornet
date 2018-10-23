@@ -1,0 +1,545 @@
+{% extends "geo/base.html" %}
+{% load static %}
+{% block upandbody %}
+    <style  type="text/css">
+
+#bann {
+  text-align: center;  
+  display: block;  
+  overflow: hidden;  
+  height: 0px;
+}
+#bg {  
+  display: inline-block;  
+  float: none;  
+  text-align: center;  
+  top: -282px;  
+  position: relative;  
+  overflow: hidden;
+}
+#fronty {
+	
+}
+
+
+#login-Group {  
+  display: inline-block;  
+  float: none;
+}
+
+#panellog {  
+  visibility: hidden;
+}
+
+.panellog {  
+  text-align: center;  
+  width: 100%;
+}
+
+#panelbtnslide {  
+  border-top-color: rgb(51, 204, 255);  
+  border-right-color: rgb(51, 204, 255);  
+  border-bottom-color: rgb(51, 204, 255);  
+  border-left-color: rgb(51, 204, 255);  
+  border-top-width: 2px;  
+  border-right-width: 2px;  
+  border-bottom-width: 2px;  
+  border-left-width: 2px;  
+  border-top-style: double;  
+  border-right-style: double;  
+  border-bottom-style: double;  
+  border-left-style: double;  
+  padding-top: 0em;  
+  padding-bottom: 0em;  
+  margin-top: -20px;  
+  text-align: center;  
+  float: none;  
+  overflow: hidden;  
+  height: 24px;  
+  width: 400px;  
+  display: inline-block;
+}
+
+#one {  
+  text-align: center;
+}
+
+#banner {  
+  right: 0px;  
+  position: relative;
+}
+h4 {text-align: center; }
+
+#link {
+}
+    
+#map_canvas {
+    position:relative;
+    width:100%;
+    height:100%;
+    z-index: 98;
+    pointer-events:all;
+    
+}
+#mapBorder{
+	position: relative;
+    display: inline-block;
+    text-align: center;
+   z-index: 99;
+    max-width: 800px;
+    width: 95%;
+    height: 400px;  
+	overflow:hidden;
+	border-radius: 6px;
+   
+	
+}
+#mapContainer {
+        width: 100%;
+        text-align: center;
+        
+}
+ 
+.extracontainer {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+}    
+</style>
+</head>
+  <body> <!-- Start of first page: #one -->
+    <div  class="extracontainer" data-role="page"  id="one"  data-theme="a">
+      <div  data-role="header">
+          <h1  id="uio">Domain GeoHornet -En Dev.: Geolocalisation du Frelon Asisatique</h1>
+      </div>
+      
+      
+      <div  id="bann"  #bann="">
+        <!-- /header -->
+        <div  id="banner">
+          <div  id="fronty"> <img  id="link"  src="{% static 'images/frelon-logo-petit20k110_127.png' %}"></div>
+        </div>
+      
+      <div  style="padding-left: 1em; margin-left: 15%; margin-right: 15%; z-index: 1; overflow: visible" data-role="collapsible" data-transition="pop">
+              <h4>Info-Geo Frelon Asiatique</h4>
+              <p>Sur cet outil participatif, clickez sur la carte pour placer votre marqueur avec si possible, une précision inférieure à 10mètres. Assurez-vous avant d'être convaincu qu'il s'agissait bien d'un <a  href="#popup"  data-transition="pop">Frelon Asiatique</a>, à pates JAUNES.</p>
+              <p>Lorsque la position du marqueur est bonne, validez votre envoi grâce à la commande en dessous de la carte. Votre information viendra nourrir la base de données d'accès public des positions observées. Nous en déduisons la position probables des nids, et tâchons d'en avertir les agents référents inscrits des communes concernées pour la suite des mesures à prendre. </p>
+      </div>
+      
+      <div style="text-align: center;" id="mapContainer">
+          <div id="mapBorder"><div id="map_canvas"></div></div>
+      </div>
+      
+      
+      
+     </div>
+      <!-- /conceptual work
+       <p>
+      <button id="drop5">Laches moi 5 markers</button>
+      <button id="bounce">Fait bouger le Tout</button>
+      <button id="stop">Stop le Tout !</button>
+      </p>
+       -->
+      <div>
+        <fieldset   class="ui-grid-a">
+          <div  class="ui-block-a"><p>latitude</p>
+          <div style="text-align: center;padding-right: 10%;padding-left: 10%; margin-left: 5%; margin-right: 5%;"><input style="text-align: center;" id="lat" name="lat" val="0" />
+          </div>
+          </div>
+          
+          <div  class="ui-block-b" ><p>longitude</p>
+          <div style="text-align: center;padding-right: 10%;padding-left: 10%; margin-left: 5%; margin-right: 5%;"><input  id="long" name="long" val="0" />
+          </div>
+          </div>
+        </fieldset>
+           
+          
+      </div>
+      <div  id="login-Group"  class="panellog"> <span>ACCES Troupe d'éclaireurs</span> </div>
+      
+
+<h3>Show internal pages:</h3>
+      <div  style="padding-left: 1em; margin-left: 15%; margin-right: 15%; z-index: 1;">
+        <p><a  style="margin: 0em; padding-bottom: 0.7em; padding-top: 0.7em;"
+             href="#"  class="ui-btn ui-shadow ui-corner-all"  onclick="load_home()">Show page two</a></p>
+      </div>
+      <div  id="panelbtnslide"  class="ui-btn ui-shadow ui-corner-all"  style="padding-top: 0em; box-shadow: 4px 4px 3px 3px rgba(0, 0, 0, 0.15); z-index: 0;"> <span> ici ça deroule<br>
+          et encore bla bla bla<br>
+          et ici un bouton : </span> </div>
+      <div  style="padding-left: 1em; margin-left: 15%; margin-right: 15%;">
+        <p><a  href="#two"  class="ui-btn ui-shadow ui-corner-all"  data-transition="pop">Show page two</a></p>
+        <p><a  href="#popup"  class="ui-btn ui-shadow ui-corner-all"  data-rel="dialog"
+             data-transition="pop">Show page "Démo" (as a dialog)</a></p>
+      </div>
+      <div   data-role="footer"  data-theme="a">
+        <h4>Si vous lisez ce message, vous êtes la résistance </h4>
+      </div>
+      <!-- /footer -->
+      <!-- /page one --> </div>
+    <!-- Start of second page: #two -->
+    <div  class="extracontainer"  data-role="page"  id="two"  data-theme="a">
+      <div  data-role="header">
+        <h1>Two</h1>
+      </div>
+      <!-- /header -->
+      <div  data-role="content"  data-theme="a">
+        <h2>Two</h2>
+        <p>I have an id of "two" on my page container. I'm the second page container in this multi-page template.</p>
+        <p>Notice that the theme is different for this page because we've added a few <code>data-theme</code> swatch assigments here to show off how flexible it is. You can add any content or widget to these pages, but we're keeping these simple.</p>
+        <p><a  href="#one"  data-direction="reverse"  data-role="button"
+             data-theme="b">Back to page "one"</a></p>
+      </div>
+      <!-- /content -->
+      <!-- /footer -->
+      <div  style=""  data-role="footer"  data-position="fixed"  data-theme="a">
+        <h4>Si vous lisez ce message, vous êtes la résistance</h4>
+      </div>
+      
+    </div>
+    <!-- /page two -->
+    <!-- Start of third page: #popup -->
+    <div   class="extracontainer" data-role="page"  id="popup">
+      <div  data-role="header"  data-theme="e">
+        <h1>Enregistrement en base de données</h1>
+      </div>
+      <!-- /header -->
+      <div  data-role="content"  data-theme="d">
+      	<img  id="link"  style="margin-left : 0px; float : left;padding-right : 1em;" src="{% static 'images/frelon-logo-petit20k110_127.png' %}">
+        <h2>Veuillez svp confirmer l'observation</h2>
+        <form>
+   
+   <div style="text-align: center">
+   	<fieldset  data-role="controlgroup" data-type="horizontal" style="text-align: center" data-theme="c">
+        <legend>Type d'observation :</legend>
+        <input type="radio" name="radio-choice-h-2" id="radio-choice-h-2a" value="frelon" checked="checked">
+        <label for="radio-choice-h-2a">Un frelon</label>
+        <input type="radio" name="radio-choice-h-2" id="radio-choice-h-2b" value="nid">
+        <label for="radio-choice-h-2b">Un nid</label>
+        
+    </fieldset>
+    
+   </div>
+    
+    <fieldset   class="ui-grid-a">
+          <div  class="ui-block-a">
+          <div style="text-align: center;padding-right: 10%;padding-left: 10%; margin-left: 5%; margin-right: 5%;">
+          	<a>latitude</a><input  	id="lat2" name="lat"/>
+          </div>
+          </div>
+          
+          <div  class="ui-block-b" >
+          <div style="text-align: center;padding-right: 10%;padding-left: 10%; margin-left: 5%; margin-right: 5%;">
+          	<a>longitude</a><input  id="long2" name="long" />
+          </div>
+          </div>
+          <br />
+           <div style="text-align: center;padding-right: 10%;padding-left: 10%; margin-left: 5%; margin-right: 5%;">
+          la date de l'observation : <input type="datetime-local" name="observedate">
+          email ? info./remerciements <input type="email" name="email">
+          </div>
+        </fieldset>
+		</form>
+        
+        <fieldset  class="ui-grid-a">
+          <div  class="ui-block-a"> <a  href="#one"  data-rel="back"  data-role="button"  data-inline="true"
+             data-icon="back">Retour Carte</a> </div>
+          <div  class="ui-block-b" style="text-align: right"> <a  href="#demo"  data-role="button"
+               data-inline="true" data-icon="check">Envoyer</a></div>
+        </fieldset>
+      </div>
+      <!-- /content -->
+      <div  style=""  data-role="footer"  data-position="fixed"  data-theme="a">
+        <h4>Si vous lisez ce message, vous êtes la résistance</h4>
+      </div>
+      <!-- /footer --> </div>
+    <!-- /page popup -->
+    <div  data-role="page"  id="demo"  data-theme="a">
+      <div  data-role="header">
+        <h1>Demo Page</h1>
+      </div>
+      <!-- /header -->
+      <div  data-role="content"  data-theme="a">
+        <h2>Démos</h2>
+        <p>I have an id of "demo" on my page container. I'm the four and "Démo" page container in this multi-page template.</p>
+        <p> <code>data-theme</code> swatch assigments here to show off how flexible it is. You can add any content or widget to these pages, but we're keeping these simple.</p>
+        <p><a  href="#one"  data-direction="reverse"  data-role="button"
+             data-theme="b">Back to page "one"</a></p>
+      </div>
+      <!-- /content -->
+      <div  style=""  data-role="footer"  data-position="fixed"  data-theme="b">
+        <h4>Bienvenue ...</h4>
+        <p>sur cet espace, vous trouverez <a  href="#popup"  data-transition="pop">mon curriculum vitae</a>, et une présentation de mes compétences techniques pour mener à bien tout type de projet d'application, Web-Based et interface avec des entrées domotiques et liaison avec vos bases de données. </p>
+      </div>
+      <!-- /footer --> </div>
+    <!-- /page demo -->
+    <script>
+    
+    /**
+ * The CenterControl adds a control to the map that recenters the map on Chicago.
+ * This constructor takes the control DIV as an argument.
+ * @constructor
+ */
+function ButtControl(buttControlDiv, map) {
+
+  // Set CSS for the control border.
+  var controlUI = document.createElement('div');
+  //controlUI.style.backgroundColor = '#fff';
+  //controlUI.style.border = '2px solid #fff';
+  //controlUI.style.borderRadius = '3px';
+  //controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
+  controlUI.style.cursor = 'pointer';
+  //controlUI.style.marginBottom = '12px';
+  controlUI.style.textAlign = 'center';
+  controlUI.title = 'Clickez pour enregistrer';
+  buttControlDiv.appendChild(controlUI);
+
+  // Set CSS for the control interior.
+  var controlText = document.createElement('div');
+  controlText.style.color = 'rgb(25,25,25)';
+  
+  controlText.style.fontSize = '16px';
+  controlText.style.lineHeight = '28px';
+  controlText.style.paddingLeft = '5px';
+  controlText.style.paddingRight = '5px';
+  controlText.innerHTML = '<p><a  href="#popup" class="ui-btn ui-shadow ui-corner-all" data-rel="dialog" data-inline="false" data-transition="pop">Valider la position</a></p>';
+  controlUI.appendChild(controlText);
+
+  
+
+}
+
+
+/*
+function getLocation() {
+    if (navigator.geolocation) {
+        
+       
+    } 
+}
+/*
+function showPosition(position) {
+    document.getElementById("lat").value = position.coords.latitude;
+    document.getElementById("long").value = position.coords.longitude;
+    
+}
+ */
+
+    function initialize() {
+        var markers = [];
+   		var myLatlng = new google.maps.LatLng(47.98239965561605, -4.270833134651184);
+        var options = {
+			  enableHighAccuracy: true,
+			  timeout: 5000,
+			  maximumAge: 0
+			};
+		function refreshLatlng(Latlng){
+			var x= document.getElementsByName("lat");
+    		var y =document.getElementsByName("long");
+			var i;
+			for (i = 0; i < x.length; i++) {
+    			x[i].value = Latlng.lat();
+    			y[i].value = Latlng.lng();
+        		
+		} 
+	}
+			function success(pos) {
+			  var crd = pos.coords;
+			
+			  console.log('Your current position is:');
+			  myLatlng.lat=crd.latitude;
+			  myLatlng.lon=crd.longitude;
+			  console.log('Longitude: ' + crd.longitude);
+			  console.log('More or less ' + crd.accuracy + ' meters.');
+			};
+			
+			function error(err) {
+			  console.warn('ERROR(' + err.code + '): ' + err.message);
+			  
+			};
+
+        navigator.geolocation.getCurrentPosition(success, error, options);
+        refreshLatlng(myLatlng);
+        
+        var mapOptions = {
+            zoom: 15,
+            center: myLatlng,
+            mapTypeId: google.maps.MapTypeId.HYBRID
+        };
+        var map = new google.maps.Map(document.getElementById("map_canvas"),mapOptions);
+        var marker = new google.maps.Marker({
+                                        draggable: true,
+                                        
+                                        position: myLatlng,
+                                        map: map,
+                                        title: "Nid ou Frelon Asiatique ici !"
+                                        });
+        
+        var hornetCircle = new google.maps.Circle({
+    	  	strokeColor: '#FF0000',
+      		strokeOpacity: 0.8,
+      		strokeWeight: 2,
+      		fillColor: '#FFFFCC',
+      		fillOpacity: 0.35,
+      		map: map,
+      		center: marker.position,
+      		radius:  400
+    	});
+        hornetCircle.bindTo('center', marker, 'position');
+        
+        google.maps.event.addListener(map, 'click', function(event) {
+                                                                      marker.setPosition(event.latLng);
+                                                                      refreshLatlng(marker.position);
+                                                                      
+                                                                      //cityCircle.setCenter(event.latLng);
+                                                                      });
+                                                                      
+    	 google.maps.event.addListener(hornetCircle, 'click', function(event) {
+                                                                      marker.setPosition(event.latLng);
+                                                                      refreshLatlng(marker.position);
+                                                                      
+                                                                      //cityCircle.setCenter(event.latLng);
+                                                                      });
+    
+    	google.maps.event.addListener(marker, 'dragend', function(event) {
+                                  									  refreshLatlng(marker.position);
+                                   									  });
+                                  // Construct the circle for each value in citymap.
+  		// Note: We scale the area of the circle based on the population.
+  		
+    		// Add the circle for this city to the map.
+    		
+        var buttControlDiv = document.createElement('div');
+  		var buttControl = new ButtControl(buttControlDiv, map);
+
+  		buttControlDiv.index = 1;
+  		map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(buttControlDiv);                         
+                                  
+                                  
+                                  
+                                  
+                                 
+        
+                                
+                                  
+                                  
+                    
+    /*
+    google.maps.event.addListenerOnce(map, 'tilesloaded', drop5);
+    
+    document.getElementById("drop5").onclick = drop5;
+     
+    document.getElementById("bounce").onclick = function() {
+        for (var i = 0; i < markers.length; i++) {
+            markers[i].setAnimation(google.maps.Animation.BOUNCE);
+        }
+    };
+    document.getElementById("stop").onclick = function() {
+        for (var i = 0; i < markers.length; i++) {
+            markers[i].setAnimation(null);
+        }
+    };
+    */
+    
+    }
+    </script>
+    <script
+         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqsuueZn7NDkqu2s2XNxb4QlTyUc9-LXY&callback=initialize"></script
+>
+    </script>
+
+    <script>
+    
+    
+    
+    
+    
+    
+    function load_home(){
+      $("#panelbtnslide").animate
+      ({    height: 282},{
+        		duration: 600,
+    				specialEasing: 
+            			{
+      			  		width: "linear",
+                        height: "swing"
+            			},
+    				complete: function(){move_bannerfunction();}
+  		}); 
+    }     
+   function move_bannerfunction() { 
+     
+     $("#banner").animate
+      ({    right: 400},{
+        		duration: 200,
+    				specialEasing: 
+            			{
+      			  		right: "swing"
+            			},
+    				complete: function(){
+             // $( this ).css('visibility','visible').show().fadeTo(140,1);
+            } 
+  		});
+   };
+   
+   $( document ).ready(function() {
+      $("#bann").animate
+      ({    height: 600},{
+        		duration: 1300,
+    				specialEasing: 
+            			{
+      			  		width: "linear",
+                        height: "swing",
+                        easing: "easeInExpo"
+            			},
+                complete: function(){
+             // Start of 2nd animate
+              
+                $("#link2").animate
+                    ({    opacity: "toggle"},{
+                     duration: 400,
+                     specialEasing:
+            			{
+      			  		width: "linear",
+       						height: "swing"
+            			},
+    				complete: function(){}
+             // $( this ).css('visibility','visible').show().fadeTo(140,1);
+                 });
+              // end of 2nd animate
+            } 
+  		});
+      
+    
+   });
+    
+    $( "#bann" ).click(function(){
+      $("#link2").animate
+      ({    opacity: "toggle"},{
+        		duration: 140,
+    				specialEasing: 
+            			{
+      			  		opacity: "linear",
+       						height: "swing"
+            			},
+    				complete: function(){
+             // $( this ).css('visibility','visible').show().fadeTo(140,1);
+            } 
+  		});
+    });
+  
+
+    
+    </script>
+     </body>
+     {% endblock upandbody %}
+</html>
+

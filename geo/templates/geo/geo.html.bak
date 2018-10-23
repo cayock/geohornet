@@ -1,0 +1,260 @@
+<html>
+  <head>
+    <meta  content="text/html; charset=utf-8"  http-equiv="content-type">
+    <meta  name="viewport"  content="width=device-width, initial-scale=1">
+    <title>Multi-page template</title>
+    <link  rel="stylesheet"  href="./css/jquery.mobile-1.4.5.min.css">
+    <link  rel="stylesheet"  href="./css/jquery.mobile.structure-1.4.5.min.css">
+    <link  rel="stylesheet"  href="./themes/theme-classic.css">
+    <script  src="./js/jquery-1.12.3.min.js"></script>
+    <script  src="./js/jquery.mobile-1.4.5.min.js"></script>
+    <script  type="text/javascript"  src="./js/sliding-pane.js"></script>
+    <style  type="text/css">
+#bann {  
+  text-align: center;  
+  display: block;  
+  overflow: hidden;  
+  height: 0px;
+}
+#bg {  
+  display: inline-block;  
+  float: none;  
+  text-align: center;  
+  top: -282px;  
+  position: relative;  
+  overflow: hidden;
+}
+#fronty {
+}
+
+
+#login-Group {  
+  display: inline-block;  
+  float: none;
+}
+
+#panellog {  
+  visibility: hidden;
+}
+
+.panellog {  
+  text-align: center;  
+  width: 100%;
+}
+
+#panelbtnslide {  
+  border-top-color: rgb(51, 204, 255);  
+  border-right-color: rgb(51, 204, 255);  
+  border-bottom-color: rgb(51, 204, 255);  
+  border-left-color: rgb(51, 204, 255);  
+  border-top-width: 2px;  
+  border-right-width: 2px;  
+  border-bottom-width: 2px;  
+  border-left-width: 2px;  
+  border-top-style: double;  
+  border-right-style: double;  
+  border-bottom-style: double;  
+  border-left-style: double;  
+  padding-top: 0em;  
+  padding-bottom: 0em;  
+  margin-top: -20px;  
+  text-align: center;  
+  float: none;  
+  overflow: hidden;  
+  height: 24px;  
+  width: 400px;  
+  display: inline-block;
+}
+
+#one {  
+  text-align: center;
+}
+
+#banner {  
+  right: 0px;  
+  position: relative;
+}
+
+#link {
+}
+
+
+
+</style> </head>
+  <body>
+    <!-- Start of first page: #one -->
+    <div  data-role="page"  id="one"  data-theme="a">
+      <div  data-role="header">
+        <h1  id="uio">Access to Domain Douirin Eric</h1>
+      </div>
+      <div  id="bann"  #bann="">
+        <!-- /header --> 
+        <div  id="banner">
+          <div  id="fronty" > <img  id="link"  src="./images/banner1.jpg"> </div>
+          <div  id="bg"> <img  src="./images/banner1-bg.png"
+               id="link2"> </div>
+        </div>
+        <div  id="boxes"> </div>
+        <!-- /content --> </div>
+      <div  id="login-Group"  class="panellog"> <span>ACCES Visiteur</span> </div>
+      <div  data-role="collapsible">
+        <h4>Bienvenue ...</h4>
+        <p>sur cet espace, vous trouverez <a  href="#popup"  data-transition="pop">mon curriculum vitae</a>, et une présentation de mes compétences techniques pour mener à bien tout type de projet d'application, Web-Based et interface avec des entrées domotiques et liaison avec vos bases de données. </p>
+      </div>
+      <h3>Show internal pages:</h3>
+      <div  style="padding-left: 1em; margin-left: 15%; margin-right: 15%; z-index: 1;">
+        <p><a  style="margin: 0em; padding-bottom: 0.7em; padding-top: 0.7em;"
+             href="#"  class="ui-btn ui-shadow ui-corner-all"  onclick="load_home()">Show page two</a></p>
+      </div>
+      <div  id="panelbtnslide"  class="ui-btn ui-shadow ui-corner-all"  style="padding-top: 0em; box-shadow: 4px 4px 3px 3px rgba(0, 0, 0, 0.15); z-index: 0;"> <span> ici ça deroule<br>
+          et encore bla bla bla<br>
+          et ici un bouton : </span> </div>
+      <div  style="padding-left: 1em; margin-left: 15%; margin-right: 15%;">
+        <p><a  href="#two"  class="ui-btn ui-shadow ui-corner-all"  data-transition="pop">Show page two</a></p>
+        <p><a  href="#popup"  class="ui-btn ui-shadow ui-corner-all"  data-rel="dialog"
+             data-transition="pop">Show page "Démo" (as a dialog)</a></p>
+      </div>
+      <div  style=""  data-role="footer"  data-position="fixed"  data-theme="a">
+        <h4>Page Footer</h4>
+      </div>
+      <!-- /footer -->
+      <!-- /page one --> </div>
+    <!-- Start of second page: #two -->
+    <div  data-role="page"  id="two"  data-theme="a">
+      <div  data-role="header">
+        <h1>Two</h1>
+      </div>
+      <!-- /header -->
+      <div  data-role="content"  data-theme="a">
+        <h2>Two</h2>
+        <p>I have an id of "two" on my page container. I'm the second page container in this multi-page template.</p>
+        <p>Notice that the theme is different for this page because we've added a few <code>data-theme</code> swatch assigments here to show off how flexible it is. You can add any content or widget to these pages, but we're keeping these simple.</p>
+        <p><a  href="#one"  data-direction="reverse"  data-role="button"
+             data-theme="b">Back to page "one"</a></p>
+      </div>
+      <!-- /content -->
+      <div  style=""  data-role="footer"  data-position="fixed"  data-theme="a">
+        <h4>Page Footer</h4>
+      </div>
+      <!-- /footer --> </div>
+    <!-- /page two -->
+    <!-- Start of third page: #popup -->
+    <div  data-role="page"  id="popup">
+      <div  data-role="header"  data-theme="e">
+        <h1>Dialog</h1>
+      </div>
+      <!-- /header -->
+      <div  data-role="content"  data-theme="d">
+        <h2>Popup</h2>
+        <p>I have an id of "popup" on my page container and only look like a dialog because the link to me had a <code>data-rel="dialog"</code> attribute which gives me this inset look and a <code>data-transition="pop"</code> attribute to change the transition to pop. Without this, I'd be styled as a normal page.</p>
+        <p><a  href="#one"  data-rel="back"  data-role="button"  data-inline="true"
+             data-icon="back">Back to page "one"</a></p>
+        <p><a  href="#demo"  data-role="button"  data-inline="true"  data-icon="back">Continue to Démo page</a></p>
+        <fieldset  class="ui-grid-a">
+          <div  class="ui-block-a"> <a  href="#one"  data-role="button"
+               data-inline="true"  data-icon="back">Back to page "one"</a> </div>
+          <div  class="ui-block-b"> <a  href="#demo"  data-role="button"
+               data-inline="true">Continue to Démo page</a></div>
+        </fieldset>
+      </div>
+      <!-- /content -->
+      <div  style=""  data-role="footer"  data-position="fixed"  data-theme="a">
+        <h4>Page Footer</h4>
+      </div>
+      <!-- /footer --> </div>
+    <!-- /page popup -->
+    <div  data-role="page"  id="demo"  data-theme="a">
+      <div  data-role="header">
+        <h1>Demo Page</h1>
+      </div>
+      <!-- /header -->
+      <div  data-role="content"  data-theme="a">
+        <h2>Démos</h2>
+        <p>I have an id of "demo" on my page container. I'm the four and "Démo" page container in this multi-page template.</p>
+        <p> <code>data-theme</code> swatch assigments here to show off how flexible it is. You can add any content or widget to these pages, but we're keeping these simple.</p>
+        <p><a  href="#one"  data-direction="reverse"  data-role="button"
+             data-theme="b">Back to page "one"</a></p>
+      </div>
+      <!-- /content -->
+      <div  style=""  data-role="footer"  data-position="fixed"  data-theme="a">
+        <h4>Page Footer</h4>
+      </div>
+      <!-- /footer --> </div>
+    <!-- /page demo -->
+    <script>  
+    
+    function load_home(){
+      $("#panelbtnslide").animate
+      ({    height: 282},{
+        		duration: 600,
+    				specialEasing: 
+            			{
+      			  		width: "linear",
+       						height: "swing"
+            			},
+    				complete: function(){move_bannerfunction();}
+  		}); 
+    }     
+   function move_bannerfunction() { 
+     
+     $("#banner").animate
+      ({    right: 400},{
+        		duration: 700,
+    				specialEasing: 
+            			{
+      			  		right: "swing"
+            			},
+    				complete: function(){
+             // $( this ).css('visibility','visible').show().fadeTo(140,1);
+            } 
+  		});
+    } 
+   $( document ).ready(function() {
+      $("#bann").animate
+      ({    height: 282},{
+        		duration: 600,
+    				specialEasing: 
+            			{
+      			  		width: "linear",
+       						height: "swing"
+            			},
+    				complete: function(){
+             // Start of 2nd animate
+              
+              $("#link2").animate
+      			({    opacity: "toggle"},{
+        		duration: 400,
+    				specialEasing: 
+            			{
+      			  		width: "linear",
+       						height: "swing"
+            			},
+    				complete: function(){
+             // $( this ).css('visibility','visible').show().fadeTo(140,1);
+            } 
+  		});
+              // end of 2nd animate
+            } 
+  		});
+      
+    });
+    
+   
+    $( "#bann" ).click(function(){
+      $("#link2").animate
+      ({    opacity: "toggle"},{
+        		duration: 140,
+    				specialEasing: 
+            			{
+      			  		opacity: "linear",
+       						height: "swing"
+            			},
+    				complete: function(){
+             // $( this ).css('visibility','visible').show().fadeTo(140,1);
+            } 
+  		});
+    });
+    
+    </script>
+  </body>
+</html>

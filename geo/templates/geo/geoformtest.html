@@ -1,0 +1,251 @@
+{% extends "geo/base.html" %}
+{% load static %}
+{% block upandbody %} <!-- Debut du bloc upandbody -->
+
+<!-- **************************************************************************************** -->
+<!--  Début HTML -->
+<!--  on trouve ici une struture 'responsive', en mode monopage, basée sur JqueryMobile1.4
+	en page1 id "one" on a acceuil et carte
+			 on integre dynamiquement un bouton pour chargement page popup formaulaire
+			 on met à jour au besoin les value lat et lon du formulaire
+			 
+	en page 2 id "popup" un formulaire d'envoie d'une nouvelle position
+			
+
+
+<!-- **************************************************************************************** -->
+
+  <body> <!-- Start of first page: #one -->
+    <div  class="extracontainer" data-role="page"  id="one"  data-theme="a">
+      <!--Notre Header -->
+      <div  data-role="header">
+        <h1  id="titleText">Domain GeoHornet - Geolocalisation du Frelon Asisatique</h1>
+      </div>
+      <div  id="bann"  #bann="">
+      	<!-- Notre Logo -->
+        <div  id="banner">
+          	<div  id="fronty"> <img  id="link"  src="{% static 'images/frelon-logo-petit20k110_127.png' %}"></div>
+        </div>
+	    <!-- Le bouton déroulant avec + pour explication de fonctionnement -->
+	    <div  style="padding-left: 1em; margin-left: 15%; margin-right: 15%; z-index: 1; overflow: visible" data-role="collapsible" data-transition="pop">
+	    	<h4>Google Maps Chasse Frelon Asiatique</h4>
+	        <p>Sur cet outil participatif, clickez sur la carte pour placer votre marqueur avec si possible, une précision inférieure à 10mètres. Assurez-vous avant d'être convaincu qu'il s'agissait bien d'un <a  href="#popup"  data-transition="pop">Frelon Asiatique</a>, à pates JAUNES.</p>
+	        <p>Lorsque la position du marqueur est bonne, validez votre envoi grâce à la commande en dessous de la carte. Votre information viendra nourrir la base de données d'accès public des positions observées. Nous en déduisons la position probables des nids, et tâchons d'en avertir les agents référents inscrits des communes concernées pour la suite des mesures à prendre. </p>
+	    </div>
+      	<!-- Notre map ici, 3 containers pour application radius sur le bord de la carte -->
+      	<div style="text-align: center;" id="mapContainer">
+          	<div id="mapBorder">
+          		<div id="map_canvas"></div> 
+          	<!-- ici le map canvas appelé dans les scripts js 
+          		Notamment le bouton valider qui est créé dynamiquement en js dans la
+          		fonction initialize, pour s'intégrer à la carte.
+          	-->
+        	</div>
+        </div>
+      </div>
+      <!-- info latitude longitude en bas de carte-->
+       
+      <div>
+        <fieldset   class="ui-grid-a">
+          <div  class="ui-block-a"><p>latitude</p>
+           <div style="text-align: center;padding-right: 10%;padding-left: 10%; margin-left: 5%; margin-right: 5%;">
+          	<input style="text-align: center;" id="lat" name="lat" val="0" />
+           </div>
+          </div>
+          <div  class="ui-block-b" ><p>longitude</p>
+           <div style="text-align: center;padding-right: 10%;padding-left: 10%; margin-left: 5%; margin-right: 5%;">
+           	<input  id="long" name="long" val="0" />
+           </div>
+          </div>
+        </fieldset>    
+      </div> <!-- /info latitude longitude en bas de carte-->
+      
+      <div  id="login-Group"  class="panellog"> <span>ACCES Troupe d'éclaireurs</span> </div>
+      
+	  
+  	  <!-- footer -->
+      <div   data-role="footer"  data-theme="a">
+        <h4>Si vous lisez ce message, vous êtes la résistance </h4>
+      </div>
+      <!-- /footer -->
+      
+     </div>
+     <!-- /page one --> 
+<!-- **************************************************************************************** -->
+<!--  Début Page formulaire validation -->
+<!-- **************************************************************************************** --> 
+    <!-- Page popup Formulaire d'envoi nouvelle position: #popup -->
+    <div   class="extracontainer" data-role="page"  id="popup">
+      <div  data-role="header"  data-theme="e">
+        <div class="page-header">
+            <a href="{% url 'post_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
+            <h1><a href="/">Django Girls Blog</a></h1>
+        </div>
+        
+        <h1>Enregistrement en base de données</h1>
+      </div>
+      <!-- /header -->
+      <div  data-role="content"  data-theme="d">
+      	<img  id="link"  style="margin-left : 0px; float : left;padding-right : 1em;" src="{% static 'images/frelon-logo-petit20k110_127.png' %}">
+        <h2>Veuillez svp confirmer l'observation</h2>
+        <form>
+   
+   		<div style="text-align: center">
+   		<fieldset  data-role="controlgroup" data-type="horizontal" style="text-align: center" data-theme="c">
+        	<legend>Type d'observation :</legend>
+        	<input type="radio" name="radio-choice-h-2" id="radio-choice-h-2a" value="frelon" checked="checked">
+        	<label for="radio-choice-h-2a">Un frelon</label>
+        	<input type="radio" name="radio-choice-h-2" id="radio-choice-h-2b" value="nid">
+        	<label for="radio-choice-h-2b">Un nid</label>
+    	</fieldset>
+   		</div>
+    
+    	<fieldset   class="ui-grid-a">
+          <div  class="ui-block-a">
+          <div style="text-align: center;padding-right: 10%;padding-left: 10%; margin-left: 5%; margin-right: 5%;">
+          	<a>latitude</a><input  	id="lat2" name="lat"/>
+          </div>
+          </div>
+          
+          <div  class="ui-block-b" >
+          <div style="text-align: center;padding-right: 10%;padding-left: 10%; margin-left: 5%; margin-right: 5%;">
+          	<a>longitude</a><input  id="long2" name="long" />
+          </div>
+          </div>
+          <br />
+           <div style="text-align: center;padding-right: 10%;padding-left: 10%; margin-left: 5%; margin-right: 5%;">
+          la date de l'observation : <input type="datetime-local" name="observedate">
+          email ? info./remerciements <input type="email" name="email">
+          </div>
+        </fieldset>
+        <fieldset  class="ui-grid-a">
+          <div  class="ui-block-a"> <a  href="#one"  data-rel="back"  data-role="button"  data-inline="true"
+             data-icon="back">Retour Carte</a> </div>
+          <div  class="ui-block-b" style="text-align: right"> <a  href="#demo"  data-role="button"
+               data-inline="true" data-icon="check">Envoyer</a></div>
+        </fieldset>
+        </form>
+      </div>
+      <!-- /content -->
+      <div  style=""  data-role="footer"  data-position="fixed"  data-theme="a">
+        <h4>Si vous lisez ce message, vous êtes la résistance</h4>
+      </div>
+      <!-- /footer --> 
+    </div><!-- /page popup -->
+<!-- **************************************************************************************** -->
+<!-- Fin page formulaire popup -->
+<!-- **************************************************************************************** -->
+    
+<!-- **************************************************************************************** -->
+<!-- Fin block HTML, Début Script JS -->
+<!-- **************************************************************************************** -->
+<script>   
+ 
+// Fonction initialize, l    
+    function initialize() {
+        var markers = [];
+   		var myLatlng = new google.maps.LatLng(47.98239965561605, -4.270833134651184);
+        var options = {
+			  enableHighAccuracy: true,
+			  timeout: 5000,
+			  maximumAge: 0
+		};
+	// Fonctions de mise à jour des données lat,long pour le formulaire d'envoi
+		function refreshLatlng(Latlng){
+			var x= document.getElementsByName("lat");
+    		var y =document.getElementsByName("long");
+			var i;
+			for (i = 0; i < x.length; i++) { // *** On boucle sur ts les elements
+    			x[i].value = Latlng.lat();//     dont name=, et edite les value.   
+    			y[i].value = Latlng.lng();	
+			}		 
+		}
+	// Fonctions de geolocalisation du terminal, si err, garde le premier point donné (plogastel st germain) 
+		function success(pos) {
+			 var crd = pos.coords;
+			 console.log('Your current position is:');
+			 myLatlng.lat=crd.latitude;
+			 myLatlng.lon=crd.longitude;
+			 console.log('Longitude: ' + crd.longitude);
+			 console.log('More or less ' + crd.accuracy + ' meters.');
+		};
+		function error(err) {
+			 console.warn('ERROR(' + err.code + '): ' + err.message);
+			  
+		};
+        navigator.geolocation.getCurrentPosition(success, error, options);
+        refreshLatlng(myLatlng);
+        var mapOptions = {
+            zoom: 15,
+            center: myLatlng,
+            mapTypeId: google.maps.MapTypeId.HYBRID
+        };
+        
+	// Création de la map        
+        var map = new google.maps.Map(document.getElementById("map_canvas"),mapOptions);
+	// Création du marker
+        var marker = new google.maps.Marker({
+          	draggable: true,                              
+          	position: myLatlng,
+          	map: map,
+          	title: "Nid ou Frelon Asiatique ici !"
+        });                              
+  	// Création du cercle autour du marker
+        var hornetCircle = new google.maps.Circle({
+    	  	strokeColor: '#FF0000',
+      		strokeOpacity: 0.8,
+      		strokeWeight: 2,
+      		fillColor: '#FFFFCC',
+      		fillOpacity: 0.35,
+      		map: map,
+      		center: marker.position,
+      		radius:  400
+    	});
+        
+  	// ici on lie notre object cercle avec le marker
+        hornetCircle.bindTo('center', marker, 'position');
+    // Fonction Click :	Map
+        google.maps.event.addListener(map, 'click', function(event) {
+        	marker.setPosition(event.latLng); // *** Mise à jour position du marker                                                              
+        	refreshLatlng(marker.position); // *** Mise à jour des champs lat lng 
+        });
+    // Fonction Click : Cercle                                                              
+    	google.maps.event.addListener(hornetCircle, 'click', function(event) {
+             marker.setPosition(event.latLng); // *** Mise à jour position du marker 
+             refreshLatlng(marker.position); // *** Mise à jour des champs lat lng 
+       	});
+  	// Fonction End of Drag : Marker 
+    	google.maps.event.addListener(marker, 'dragend', function(event) {
+        	refreshLatlng(marker.position); // *** Mise à jour des champs lat lng 
+        });
+    // on fabrique le bouton valider en bas au centre de map 
+		function ButtControl(buttControlDiv, map) {
+		  // Set CSS for the control border.
+		  	var controlUI = document.createElement('div');
+		  	controlUI.style.cursor = 'pointer';
+		  	controlUI.style.textAlign = 'center';
+		  	controlUI.title = 'Clickez pour enregistrer';
+		  	buttControlDiv.appendChild(controlUI);
+		  // Set CSS for the control interior.
+		  	var controlText = document.createElement('div');
+		  	controlText.style.color = 'rgb(25,25,25)';
+		  	controlText.style.fontSize = '16px';
+		  	controlText.style.lineHeight = '28px';
+		  	controlText.style.paddingLeft = '5px';
+		  	controlText.style.paddingRight = '5px';
+		  	controlText.innerHTML = '<p><a  href="#popup" class="ui-btn ui-shadow ui-corner-all" data-rel="dialog" data-inline="false" data-transition="pop">Valider la position</a></p>';
+		  	controlUI.appendChild(controlText);
+		}
+        var buttControlDiv = document.createElement('div'); // on cree le div
+  		var buttControl = new ButtControl(buttControlDiv, map); // on cree le button dans le div
+  		buttControlDiv.index = 1;
+  	// Création du bouton Valider	
+  		map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(buttControlDiv); // on integre le div à la map
+  		                        
+    } // End Fonction initialize, lancée juste en dessous, après avoir lancé le download de la carte
+    </script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqsuueZn7NDkqu2s2XNxb4QlTyUc9-LXY&callback=initialize"></script>
+ </body>
+     {% endblock upandbody %}
+</html>
+
