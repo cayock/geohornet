@@ -25,7 +25,7 @@ SECRET_KEY = 'kew1j=*1i*u#g(c-gia_y8+!#pa2^mpy@-9^r9312_c@87zqi6'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['54.38.188.213','vps603389.ovh.net',]
 
 
 # Application definition
@@ -123,3 +123,5 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
+#STATIC_ROOT = os.path.join(BASE_DIR, "static/")
+
